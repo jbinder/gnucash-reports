@@ -345,7 +345,16 @@
                (debit-sum    (gnc-numeric-zero))
                (credit-sum   (gnc-numeric-zero))
                (report-currency #f)
-               (row-num      0))
+               (row-num      0)
+               ;; Build account title string
+               (account-names (map gnc-account-get-full-name accounts))
+               (account-title (string-join account-names ", ")))
+
+          ;; Show account name(s) as a heading above the table
+          (gnc:html-document-add-object!
+            document
+            (gnc:make-html-text
+              (gnc:html-markup-h3 account-title)))
 
           (gnc:html-table-set-col-headers! table (make-heading-list cv))
 
